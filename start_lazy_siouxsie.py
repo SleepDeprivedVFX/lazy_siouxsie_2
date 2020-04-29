@@ -1,13 +1,3 @@
-# Copyright (c) 2013 Shotgun Software Inc.
-# 
-# CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
-# Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
-# not expressly granted therein are reserved by Shotgun Software Inc.
-
 """
 GOALS:
 1. Connect all of the other UI elements, Frame size, rate, aspect ratio
@@ -17,7 +7,7 @@ GOALS:
 5. Get the lights layer working
 """
 __author__ = 'Adam Benson'
-__version__ = '1.0.1'
+__version__ = '2.0.0'
 
 """
 1.0.1 Version Notes:
