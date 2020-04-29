@@ -1,0 +1,1286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>lazySiouxsie</class>
+ <widget class="QWidget" name="lazySiouxsie">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>557</width>
+    <height>804</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Lazy Siouzsie</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QLabel" name="title">
+     <property name="styleSheet">
+      <string notr="true">font: 75 italic 12pt &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Lazy Siouxsie</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="subTitle">
+     <property name="styleSheet">
+      <string notr="true">font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Auto Turntable Machine</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QLabel" name="file_label">
+       <property name="toolTip">
+        <string>The current file being Turn Tabled</string>
+       </property>
+       <property name="text">
+        <string>File</string>
+       </property>
+       <property name="buddy">
+        <cstring>file_path</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="file_path">
+       <property name="toolTip">
+        <string>The current file being Turn Tabled</string>
+       </property>
+       <property name="statusTip">
+        <string>The current file being Turn Tabled</string>
+       </property>
+       <property name="whatsThis">
+        <string>The current file being Turn Tabled</string>
+       </property>
+       <property name="placeholderText">
+        <string>The Current File to be sent to the farm</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="hdri_label">
+       <property name="toolTip">
+        <string>HDRII list provided by a Shotgun directory of Studio HDRIs</string>
+       </property>
+       <property name="text">
+        <string>HDRIs</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="buddy">
+        <cstring>hdriList</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="hdriList">
+       <property name="toolTip">
+        <string>HDRI list provided by a Shotgun directory of Studio HDRIs</string>
+       </property>
+       <property name="statusTip">
+        <string>HDRI list provided by a Shotgun directory of Studio HDRIs</string>
+       </property>
+       <property name="whatsThis">
+        <string>HDRI list provided by a Shotgun directory of Studio HDRIs</string>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+       <property name="currentRow">
+        <number>-1</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="custom">
+       <property name="toolTip">
+        <string>Custom HDRI file, if a specific file is desired</string>
+       </property>
+       <property name="text">
+        <string>Custom HDRI</string>
+       </property>
+       <property name="buddy">
+        <cstring>custom_hdri</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="custom_hdri">
+       <property name="toolTip">
+        <string>Custom HDRI file, if a specific file is desired</string>
+       </property>
+       <property name="statusTip">
+        <string>Custom HDRI file, if a specific file is desired</string>
+       </property>
+       <property name="whatsThis">
+        <string>Custom HDRI file, if a specific file is desired</string>
+       </property>
+       <property name="placeholderText">
+        <string>If a show/shot specific HDRI is needed</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="browse_btn">
+       <property name="toolTip">
+        <string>Custom HDRI file, if a specific file is desired</string>
+       </property>
+       <property name="statusTip">
+        <string>Custom HDRI file, if a specific file is desired</string>
+       </property>
+       <property name="whatsThis">
+        <string>Custom HDRI file, if a specific file is desired</string>
+       </property>
+       <property name="text">
+        <string>Browse</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="frame_statement">
+     <property name="text">
+      <string>The Start and End times are for the initial rotation.  A second rotation of equal time will be added to spin the HDRI around the object.  The Total Frames represents first and second rotations for each HDRI</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="startLabel">
+       <property name="toolTip">
+        <string>Starting frame of Camera animation.</string>
+       </property>
+       <property name="text">
+        <string>Start Frame</string>
+       </property>
+       <property name="buddy">
+        <cstring>startFrame</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="startFrame">
+       <property name="toolTip">
+        <string>Starting frame of Camera animation.</string>
+       </property>
+       <property name="statusTip">
+        <string>Starting frame of Camera animation.</string>
+       </property>
+       <property name="whatsThis">
+        <string>Starting frame of Camera animation.</string>
+       </property>
+       <property name="maximum">
+        <number>50000</number>
+       </property>
+       <property name="value">
+        <number>1001</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="endLabel">
+       <property name="toolTip">
+        <string>End frame of the Camera Animation.  HDRI Spin will be added to this time</string>
+       </property>
+       <property name="text">
+        <string>End Frame</string>
+       </property>
+       <property name="buddy">
+        <cstring>endFrame</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="endFrame">
+       <property name="toolTip">
+        <string>End frame of the Camera Animation.  HDRI Spin will be added to this time</string>
+       </property>
+       <property name="statusTip">
+        <string>End frame of the Camera Animation.  HDRI Spin will be added to this time</string>
+       </property>
+       <property name="whatsThis">
+        <string>End frame of the Camera Animation.  HDRI Spin will be added to this time</string>
+       </property>
+       <property name="maximum">
+        <number>50000</number>
+       </property>
+       <property name="value">
+        <number>1072</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="totalFrameLabel">
+       <property name="toolTip">
+        <string>Total frames of animation is the Camera Rotation plus an HDRI rotation of the same value.  Thus, double the frames</string>
+       </property>
+       <property name="text">
+        <string>Total Frames:</string>
+       </property>
+       <property name="buddy">
+        <cstring>total_frames</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="total_frames">
+       <property name="maximumSize">
+        <size>
+         <width>75</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Total frames of animation is the Camera Rotation plus an HDRI rotation of the same value.  Thus, double the frames</string>
+       </property>
+       <property name="statusTip">
+        <string>Total frames of animation is the Camera Rotation plus an HDRI rotation of the same value.  Thus, double the frames</string>
+       </property>
+       <property name="whatsThis">
+        <string>Total frames of animation is the Camera Rotation plus an HDRI rotation of the same value.  Thus, double the frames</string>
+       </property>
+       <property name="text">
+        <string>144</string>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_12">
+     <item>
+      <widget class="QLabel" name="rot_range_label">
+       <property name="text">
+        <string>Rotation Range:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="full_circle">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>360°</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_10">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="partial_circle">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Range</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="from_label">
+       <property name="text">
+        <string>From:</string>
+       </property>
+       <property name="buddy">
+        <cstring>from_range</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="from_range">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>90</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="to_label">
+       <property name="text">
+        <string>To:</string>
+       </property>
+       <property name="buddy">
+        <cstring>to_range</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="to_range">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>-90</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_9">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="resolution_label">
+       <property name="toolTip">
+        <string>Resolution set by Shotgun if available</string>
+       </property>
+       <property name="statusTip">
+        <string>Resolution set by Shotgun if available</string>
+       </property>
+       <property name="whatsThis">
+        <string>Resolution set by Shotgun if available</string>
+       </property>
+       <property name="text">
+        <string>Resolution</string>
+       </property>
+       <property name="buddy">
+        <cstring>res_width</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="res_width">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Resolution set by Shotgun if available</string>
+       </property>
+       <property name="statusTip">
+        <string>Resolution set by Shotgun if available</string>
+       </property>
+       <property name="whatsThis">
+        <string>Resolution set by Shotgun if available</string>
+       </property>
+       <property name="maxLength">
+        <number>8</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="x_label">
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="res_height">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Resolution set by Shotgun if available</string>
+       </property>
+       <property name="statusTip">
+        <string>Resolution set by Shotgun if available</string>
+       </property>
+       <property name="whatsThis">
+        <string>Resolution set by Shotgun if available</string>
+       </property>
+       <property name="maxLength">
+        <number>8</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="res_scale">
+       <property name="toolTip">
+        <string>Resolution scale will change the final render size.</string>
+       </property>
+       <property name="statusTip">
+        <string>Resolution scale will change the final render size.</string>
+       </property>
+       <property name="whatsThis">
+        <string>Resolution scale will change the final render size.</string>
+       </property>
+       <property name="currentIndex">
+        <number>3</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>25%</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>50%</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>75%</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>100%</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>150%</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>200%</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <item>
+      <widget class="QLabel" name="pixel_aspect_label">
+       <property name="toolTip">
+        <string>Pixel aspect set by Shotgun if it's available</string>
+       </property>
+       <property name="text">
+        <string>Pixel Aspect</string>
+       </property>
+       <property name="buddy">
+        <cstring>pixel_aspect</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="pixel_aspect">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Pixel aspect set by Shotgun if it's available</string>
+       </property>
+       <property name="statusTip">
+        <string>Pixel aspect set by Shotgun if it's available</string>
+       </property>
+       <property name="whatsThis">
+        <string>Pixel aspect set by Shotgun if it's available</string>
+       </property>
+       <property name="text">
+        <string>1.0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="camera_height_label">
+       <property name="toolTip">
+        <string>Height off the ground in Maya Units.  If left blank, camara uses the default calculation</string>
+       </property>
+       <property name="statusTip">
+        <string>Height off the ground in Maya Units.  If left blank, camara uses the default calculation</string>
+       </property>
+       <property name="whatsThis">
+        <string>Height off the ground in Maya Units.  If left blank, camara uses the default calculation</string>
+       </property>
+       <property name="text">
+        <string>Camera Height</string>
+       </property>
+       <property name="buddy">
+        <cstring>camera_height</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="camera_height">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Height off the ground in Maya Units.  If left blank, camara uses the default calculation</string>
+       </property>
+       <property name="statusTip">
+        <string>Height off the ground in Maya Units.  If left blank, camara uses the default calculation</string>
+       </property>
+       <property name="whatsThis">
+        <string>Height off the ground in Maya Units.  If left blank, camara uses the default calculation</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <item>
+      <widget class="QLabel" name="render_engine_label">
+       <property name="toolTip">
+        <string>The Rendering Engine.  Selected by Shotgun if it is available.</string>
+       </property>
+       <property name="statusTip">
+        <string>The Rendering Engine.  Selected by Shotgun if it is available.</string>
+       </property>
+       <property name="whatsThis">
+        <string>The Rendering Engine.  Selected by Shotgun if it is available.</string>
+       </property>
+       <property name="text">
+        <string>Rendering Engine</string>
+       </property>
+       <property name="buddy">
+        <cstring>rendering_engine</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="rendering_engine">
+       <property name="toolTip">
+        <string>The Rendering Engine.  Selected by Shotgun if it is available.</string>
+       </property>
+       <property name="statusTip">
+        <string>The Rendering Engine.  Selected by Shotgun if it is available.</string>
+       </property>
+       <property name="whatsThis">
+        <string>The Rendering Engine.  Selected by Shotgun if it is available.</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>arnold</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>vray</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>redshift</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>renderman</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>mayasoftware</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="render_slices_label">
+       <property name="toolTip">
+        <string>The render slices set a percentage of frames to be rendered based on rotational degrees. All frames will be submitted to the farm, but only frames at the chosen angle will automatically be rendered, leaving the remaining frames suspended. 0° renders all frames</string>
+       </property>
+       <property name="statusTip">
+        <string>The render slices set a percentage of frames to be rendered based on rotational degrees. All frames will be submitted to the farm, but only frames at the chosen angle will automatically be rendered, leaving the remaining frames suspended. 0° renders all frames</string>
+       </property>
+       <property name="whatsThis">
+        <string>The render slices set a percentage of frames to be rendered based on rotational degrees. All frames will be submitted to the farm, but only frames at the chosen angle will automatically be rendered, leaving the remaining frames suspended. 0° renders all frames</string>
+       </property>
+       <property name="text">
+        <string>Render Slices</string>
+       </property>
+       <property name="buddy">
+        <cstring>render_slices</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="render_slices">
+       <property name="toolTip">
+        <string>The render slices set a percentage of frames to be rendered based on rotational degrees. All frames will be submitted to the farm, but only frames at the chosen angle will automatically be rendered, leaving the remaining frames suspended. 0° renders all frames</string>
+       </property>
+       <property name="statusTip">
+        <string>The render slices set a percentage of frames to be rendered based on rotational degrees. All frames will be submitted to the farm, but only frames at the chosen angle will automatically be rendered, leaving the remaining frames suspended. 0° renders all frames</string>
+       </property>
+       <property name="whatsThis">
+        <string>The render slices set a percentage of frames to be rendered based on rotational degrees. All frames will be submitted to the farm, but only frames at the chosen angle will automatically be rendered, leaving the remaining frames suspended. 0° renders all frames</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <item>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>15</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>20</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>25</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>30</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>35</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>40</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>45</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>50</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>55</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>60</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>65</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>70</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>75</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>80</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>85</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>90</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>95</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>100</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>105</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>110</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>115</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>120</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>125</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>130</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>135</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>140</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>145</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>150</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>155</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>160</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>165</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>170</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>175</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>180</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="degreeLabel">
+       <property name="text">
+        <string>°</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_11">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Render Format</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="render_format">
+       <item>
+        <property name="text">
+         <string>png</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>jpg</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>exr</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_10">
+     <item>
+      <widget class="QLabel" name="quality_label">
+       <property name="text">
+        <string>Quality</string>
+       </property>
+       <property name="buddy">
+        <cstring>quality_slider</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="quality_slider">
+       <property name="toolTip">
+        <string>The quality setting for the renderer.  </string>
+       </property>
+       <property name="statusTip">
+        <string>The quality setting for the renderer.  </string>
+       </property>
+       <property name="whatsThis">
+        <string>The quality setting for the renderer.  </string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>10</number>
+       </property>
+       <property name="value">
+        <number>7</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="quality_value">
+       <property name="toolTip">
+        <string>The quality setting for the renderer.  </string>
+       </property>
+       <property name="statusTip">
+        <string>The quality setting for the renderer.  </string>
+       </property>
+       <property name="whatsThis">
+        <string>The quality setting for the renderer.  </string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>10</number>
+       </property>
+       <property name="value">
+        <number>7</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_9">
+     <item>
+      <widget class="QCheckBox" name="scene_lights">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="toolTip">
+        <string>When checked, any lights created in the scene will be rendered as one of the render passes.  Otherwise the existing lights will be ignored.</string>
+       </property>
+       <property name="statusTip">
+        <string>When checked, any lights created in the scene will be rendered as one of the render passes.  Otherwise the existing lights will be ignored.</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Use Scene Lights</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="ground_plane">
+       <property name="toolTip">
+        <string>Create a shadow catching ground plane</string>
+       </property>
+       <property name="statusTip">
+        <string>Create a shadow catching ground plane</string>
+       </property>
+       <property name="whatsThis">
+        <string>Create a shadow catching ground plane</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Ground Plane</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_8">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chrome_balls">
+       <property name="toolTip">
+        <string>Automatically generate Chrome and 50% Gray Spheres</string>
+       </property>
+       <property name="statusTip">
+        <string>Automatically generate Chrome and 50% Gray Spheres</string>
+       </property>
+       <property name="whatsThis">
+        <string>Automatically generate Chrome and 50% Gray Spheres</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Auto Chrome Balls</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_13">
+     <item>
+      <widget class="QCheckBox" name="open_turntable">
+       <property name="text">
+        <string>Open Turntable File When Finished</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="submit_to_deadline">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Submit to Deadline</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QProgressBar" name="build_progress">
+       <property name="styleSheet">
+        <string notr="true">QProgressBar {
+    text-align: center;
+	color: rgb(90, 90, 90);
+}
+
+QProgressBar::chunk {
+    background-color: rgb(224, 149, 0);
+    width: 20px;
+	margin: 1px;
+}</string>
+       </property>
+       <property name="value">
+        <number>24</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="status_label">
+       <property name="text">
+        <string>Ready...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancel_btn">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="spin_btn">
+       <property name="toolTip">
+        <string>Create the Turnable file and submit it.</string>
+       </property>
+       <property name="statusTip">
+        <string>Create the Turnable file and submit it.</string>
+       </property>
+       <property name="whatsThis">
+        <string>Create the Turnable file and submit it.</string>
+       </property>
+       <property name="text">
+        <string>Spin It</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>spin_btn</tabstop>
+  <tabstop>cancel_btn</tabstop>
+  <tabstop>browse_btn</tabstop>
+  <tabstop>startFrame</tabstop>
+  <tabstop>endFrame</tabstop>
+  <tabstop>res_scale</tabstop>
+  <tabstop>camera_height</tabstop>
+  <tabstop>rendering_engine</tabstop>
+  <tabstop>render_slices</tabstop>
+  <tabstop>render_format</tabstop>
+  <tabstop>quality_value</tabstop>
+  <tabstop>scene_lights</tabstop>
+  <tabstop>ground_plane</tabstop>
+  <tabstop>chrome_balls</tabstop>
+  <tabstop>submit_to_deadline</tabstop>
+  <tabstop>full_circle</tabstop>
+  <tabstop>partial_circle</tabstop>
+  <tabstop>from_range</tabstop>
+  <tabstop>to_range</tabstop>
+  <tabstop>res_width</tabstop>
+  <tabstop>res_height</tabstop>
+  <tabstop>pixel_aspect</tabstop>
+  <tabstop>quality_slider</tabstop>
+  <tabstop>hdriList</tabstop>
+  <tabstop>custom_hdri</tabstop>
+  <tabstop>total_frames</tabstop>
+  <tabstop>file_path</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>quality_slider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>quality_value</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>413</x>
+     <y>526</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>517</x>
+     <y>531</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>quality_value</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>quality_slider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>518</x>
+     <y>543</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>545</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
