@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Lazy Siouzsie</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(100, 100, 100);
+color: rgb(240, 240, 240);</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QLabel" name="title">
