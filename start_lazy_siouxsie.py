@@ -6,6 +6,8 @@ GOALS:
 4. Setup the Deadline script
 5. Get the lights layer working
 """
+from __future__ import absolute_import
+from __future__ import print_function
 __author__ = 'Adam Benson'
 __version__ = '2.0.0'
 
@@ -14,9 +16,8 @@ __version__ = '2.0.0'
 Bug fixes:
 
 """
-print 'Running Lazy Siouxsie v%s' % __version__
+print('Running Lazy Siouxsie v%s' % __version__)
 
-import sgtk
 import platform
 import os
 import sys
@@ -33,12 +34,14 @@ from time import sleep
 import math
 from datetime import datetime
 import json
+import logging
 
 # by importing QT from sgtk rather than directly, we ensure that
 # the code will be compatible with both PySide and PyQt.
-from sgtk.platform.qt import QtCore, QtGui
+from PySide2 import QtCore, QtGui, QtWidgets
 from .ui.lazy_siouxsie_ui import Ui_lazySiouxsie
-logger = sgtk.platform.get_logger(__name__)
+
+logger = logging.getLevelName(__name__)
 
 
 def show_dialog(app_instance):
@@ -56,7 +59,7 @@ def show_dialog(app_instance):
 
 class LazySiouxsie(QtGui.QWidget):
     """
-    Main application dialog window
+    Lazy Siouxsie's dialog box.
     """
 
     def __init__(self):
@@ -107,7 +110,7 @@ class LazySiouxsie(QtGui.QWidget):
             'VRayLightSphereShape'
         ]
 
-        # now load in the UI that was created in the UI designer
+        # Setup the UI
         self.ui = Ui_lazySiouxsie()
         self.ui.setupUi(self)
 
@@ -505,7 +508,7 @@ class LazySiouxsie(QtGui.QWidget):
                     try:
                         cmds.loadPlugin('vrayformaya')
                     except:
-                        print 'CANNOT LOAD V-RAY'
+                        print('CANNOT LOAD V-RAY')
 
                 self.ui.build_progress.setValue(71)
                 self.ui.status_label.setText('Setting engine...')
@@ -520,7 +523,7 @@ class LazySiouxsie(QtGui.QWidget):
                 self.ui.status_label.setText('Setting up frame sizes and image format...')
                 cmds.setAttr('vraySettings.width', int(resolutionWidth))
                 cmds.setAttr('vraySettings.height', int(resolutionHeight))
-                print 'pixel_aspect: %s' % pixel_aspect
+                print('pixel_aspect: %s' % pixel_aspect)
                 cmds.setAttr('vraySettings.pixelAspect', float(pixel_aspect))
 
                 output = render_format.lower()
@@ -564,7 +567,7 @@ class LazySiouxsie(QtGui.QWidget):
                     try:
                         cmds.loadPlugin('mtoa')
                     except:
-                        print 'CANNOT LOAD ARNOLD!'
+                        print('CANNOT LOAD ARNOLD!')
                 self.ui.build_progress.setValue(71)
                 self.ui.status_label.setText('Setting engine and output path...')
                 pathSettings = '%s/<RenderLayer>/%s/<RenderLayer>_<Scene>' % (task, version)
@@ -1404,7 +1407,7 @@ class LazySiouxsie(QtGui.QWidget):
                     if task_list:
                         logger.debug('Suspending non-sliced tasks...')
                         self.dl.Tasks.SuspendJobTasks(jobId=job_id, taskIds=task_list)
-            except Exception, e:
+            except Exception as e:
                 submitted = False
                 logger.error('JOB SUBMISSION FAILED! %s' % e)
             t += 1
