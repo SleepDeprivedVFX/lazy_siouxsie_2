@@ -39,9 +39,11 @@ import logging
 # by importing QT from sgtk rather than directly, we ensure that
 # the code will be compatible with both PySide and PyQt.
 from PySide2 import QtCore, QtGui, QtWidgets
-from .ui.lazy_siouxsie_ui import Ui_lazySiouxsie
+from ui.lazy_siouxsie_ui import Ui_lazySiouxsie
+# sys.path.append(r'C:\Users\sleep\OneDrive\Documents\Scripts\Python\Maya\Lighting-Rendering_Utilities\lazy_siouxsie_2')
+sys.path.append(sys.argv[0])
 
-logger = logging.getLevelName(__name__)
+logger = logging.getLogger('LazySLog')
 
 
 def show_dialog(app_instance):
@@ -57,7 +59,7 @@ def show_dialog(app_instance):
     app_instance.engine.show_dialog("Lazy Siouxsie Auto Turntables...", app_instance, LazySiouxsie)
 
 
-class LazySiouxsie(QtGui.QWidget):
+class LazySiouxsie(QtWidgets.QWidget):
     """
     Lazy Siouxsie's dialog box.
     """
@@ -67,7 +69,7 @@ class LazySiouxsie(QtGui.QWidget):
         Constructor
         """
         # first, call the base class and let it do its thing.
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
         self.arnold_formate = {
             'png': 'png',
@@ -116,7 +118,17 @@ class LazySiouxsie(QtGui.QWidget):
 
         # most of the useful accessors are available through the Application class instance
         # it is often handy to keep a reference to this. You can get it via the following method:
-        self._app = sgtk.platform.current_bundle()
+        # TODO: So, the self._app clearly has to be replaced since this needs to be engine proof
+        #       For instance, FTrack won't work with Shotgun
+        #       The self._app is doing 2 main things:
+        #           1. It is getting configuration settings.  These can be moved to an internal config
+        #               a. ls_config.cfg has been created for this purpose
+        #           2. It is providing an engine from Shotgun for context and other data.
+        # self._app = sgtk.platform.current_bundle()
+        self._app = {
+            'turntable_task': 'TNT_turntable',
+            'output_format': 'PNG'
+        }
         logger.info('Starting Lazy Siouxsie!')
 
         # Connect to Deadline
@@ -128,14 +140,19 @@ class LazySiouxsie(QtGui.QWidget):
         else:
             python_path = '/Volumes/Applications/Python27/Lib/site-packages'
         sys.path.append(python_path)
-        from Deadline import DeadlineConnect as connect
-        deadline_connection = self._app.get_setting('deadline_connection')
-        deadline_port = int(self._app.get_setting('deadline_port'))
-        self.dl = connect.DeadlineCon(deadline_connection, deadline_port)
-        logger.debug('Deadline Connection made!')
+        # TODO: Check and make sure that the Deadline API is available, or move the dealine routine out of the main loop
+        try:
+            from Deadline import DeadlineConnect as connect
+            deadline_connection = self._app.get_setting('deadline_connection')
+            deadline_port = int(self._app.get_setting('deadline_port'))
+            self.dl = connect.DeadlineCon(deadline_connection, deadline_port)
+            logger.debug('Deadline Connection made!')
+        except ImportError:
+            self.dl = None
+            logger.error('No Deadline to Python!')
 
-        self.turntable_task = self._app.get_setting('turntable_task')
-        self.render_format = self._app.get_setting('output_format')
+        self.turntable_task = self._app['turntable_task']
+        self.render_format = self._app['output_format']
         logger.debug('Collected Turntable Configuration Settings.')
 
         self.ground_plane = []
@@ -149,14 +166,23 @@ class LazySiouxsie(QtGui.QWidget):
             self.ui.status_label.setStyleSheet('color: rgb(255, 0, 0);')
         logger.debug('Precheck complete.')
 
-        engine = self._app.engine
-        self.sg = engine.sgtk
-        self.context = engine.context
-        self.project = self.context.project['name']
-        self.project_id = self.context.project['id']
-        self.entity = self.context.entity['type']
-        self.task = self.context.task['name']
-        self.entity_id = self.context.entity['id']
+        # FIXME: The following is all the Shotgun connectivity and context stuff
+        # engine = self._app.engine
+        # self.sg = engine.sgtk
+        # self.context = engine.context
+        # self.project = self.context.project['name']
+        # self.project_id = self.context.project['id']
+        # self.entity = self.context.entity['type']
+        # self.task = self.context.task['name']
+        # self.entity_id = self.context.entity['id']
+        # self.tt_task = None
+        self.sg = None
+        self.context = None
+        self.project = None
+        self.project_id = None
+        self.entity = None
+        self.task = None
+        self.entity_id = None
         self.tt_task = None
         logger.debug('Shotgun context collected.')
 
@@ -168,27 +194,46 @@ class LazySiouxsie(QtGui.QWidget):
             'sg_output_resolution',
             'sg_renderers'
         ]
-        sg_settings = self.sg.shotgun.find_one('Project', filters, fields)
+        try:
+            sg_settings = self.sg.shotgun.find_one('Project', filters, fields)
 
-        sg_resolution = sg_settings['sg_output_resolution']
-        split_res = sg_resolution.split('x')
-        resolution_width = split_res[0]
-        resolution_height = split_res[1]
-        pixel_aspect = str(sg_settings['sg_pixel_aspect'])
-        renderers = sg_settings['sg_renderers'][0]['name']
+            sg_resolution = sg_settings['sg_output_resolution']
+            split_res = sg_resolution.split('x')
+            resolution_width = split_res[0]
+            resolution_height = split_res[1]
+            pixel_aspect = str(sg_settings['sg_pixel_aspect'])
+            renderers = sg_settings['sg_renderers'][0]['name']
+        except AttributeError:
+            logger.error('Shit the bed on Shotgun')
+            resolution_width = 1920
+            resolution_height = 1080
+            pixel_aspect = 1.0
+            renderers = 'Arnold'
+        finally:
+            resolution_width = 1920
+            resolution_height = 1080
+            pixel_aspect = 1.0
+            renderers = 'Arnold'
 
         if not pixel_aspect or pixel_aspect == 'None':
             pixel_aspect = '1.0'
-
-        self.ui.res_width.setText(resolution_width)
-        self.ui.res_height.setText(resolution_height)
-        self.ui.pixel_aspect.setText(pixel_aspect)
-        self.ui.rendering_engine.setCurrentText(renderers)
-        hdri_path = self._app.get_setting('hdri_path')
-        hdri_settings = self._app.get_setting('hdri_settings')
-        logger.debug('Shotgun Render Settings Collected.')
+        
+        
+        try:
+            self.ui.res_width.setText(resolution_width)
+            self.ui.res_height.setText(resolution_height)
+            self.ui.pixel_aspect.setText(pixel_aspect)
+            self.ui.rendering_engine.setCurrentText(renderers)
+            hdri_path = self._app.get_setting('hdri_path')
+            hdri_settings = self._app.get_setting('hdri_settings')
+            logger.debug('Shotgun Render Settings Collected.')
+        except TypeError:
+            logger.error('Shit the bed on Render Settings')
+            hdri_path = 'c:/sleep/'
+            hdri_settings = 'None'
 
         if os.path.exists(hdri_path):
+            print('PATH EXISTS')
             self.hdri_path = hdri_path
             files = os.listdir(hdri_path)
             for f in files:
@@ -200,28 +245,32 @@ class LazySiouxsie(QtGui.QWidget):
                         self.ui.hdriList.setCurrentItem(hdri)
         if os.path.exists(hdri_settings):
             settings = open(hdri_settings, 'r')
+            print('HDRI JSON About to load')
             self.hdri_setup = json.load(settings)
         else:
             self.hdri_setup = None
         file_to_send = cmds.file(q=True, sn=True)
-        self.ui.file_path.setText(file_to_send)
-        self.ui.file_path.setEnabled(False)
-        self.ui.cancel_btn.clicked.connect(self.cancel)
-        self.ui.spin_btn.clicked.connect(self.build_turn_table)
-        self.ui.browse_btn.clicked.connect(self.browse)
-        info = self.get_scene_details()
-        self.ui.res_width.setText(info['width'])
-        self.ui.res_height.setText(info['height'])
-        self.ui.build_progress.setValue(0)
-        self.ui.total_frames.setEnabled(False)
-        self.ui.startFrame.valueChanged.connect(self.set_frames)
-        self.ui.endFrame.valueChanged.connect(self.set_frames)
-        self.ui.render_format.setCurrentText(self.render_format)
-        self.ui.scene_lights.clicked.connect(self.scene_lights_checkbox)
-        self.ui.full_circle.clicked.connect(self.set_range)
-        self.ui.partial_circle.clicked.connect(self.set_range)
-        self.ui.from_range.setEnabled(False)
-        self.ui.to_range.setEnabled(False)
+        try:
+            self.ui.file_path.setText(file_to_send)
+            self.ui.file_path.setEnabled(False)
+            self.ui.cancel_btn.clicked.connect(self.cancel)
+            self.ui.spin_btn.clicked.connect(self.build_turn_table)
+            self.ui.browse_btn.clicked.connect(self.browse)
+            info = self.get_scene_details()
+            self.ui.res_width.setText(info['width'])
+            self.ui.res_height.setText(info['height'])
+            self.ui.build_progress.setValue(0)
+            self.ui.total_frames.setEnabled(False)
+            self.ui.startFrame.valueChanged.connect(self.set_frames)
+            self.ui.endFrame.valueChanged.connect(self.set_frames)
+            self.ui.render_format.setCurrentText(self.render_format)
+            self.ui.scene_lights.clicked.connect(self.scene_lights_checkbox)
+            self.ui.full_circle.clicked.connect(self.set_range)
+            self.ui.partial_circle.clicked.connect(self.set_range)
+            self.ui.from_range.setEnabled(False)
+            self.ui.to_range.setEnabled(False)
+        except:
+            pass
         logger.debug('Tool setup complete!')
 
     def set_frames(self):
@@ -926,15 +975,18 @@ class LazySiouxsie(QtGui.QWidget):
             ['name', 'is', self.project]
         ]
         fields = ['sg_renderers', 'sg_output_resolution', 'sg_frame_rate', 'sg_render_format', 'sg_pixel_aspect']
-        projectInfo = self.sg.shotgun.find_one("Project", filters, fields)
-        info = {}
-        resolution = projectInfo['sg_output_resolution']
-        info['width'] = resolution.split('x')[0]
-        info['height'] = resolution.split('x')[1]
-        info['frame_rate'] = projectInfo['sg_frame_rate']
-        info['render_format'] = projectInfo['sg_render_format']['name']
-        info['render_engine'] = projectInfo['sg_renderers'][0]['name']
-        info['aspect_ratio'] = projectInfo['sg_pixel_aspect']
+        try:
+            projectInfo = self.sg.shotgun.find_one("Project", filters, fields)
+            info = {}
+            resolution = projectInfo['sg_output_resolution']
+            info['width'] = resolution.split('x')[0]
+            info['height'] = resolution.split('x')[1]
+            info['frame_rate'] = projectInfo['sg_frame_rate']
+            info['render_format'] = projectInfo['sg_render_format']['name']
+            info['render_engine'] = projectInfo['sg_renderers'][0]['name']
+            info['aspect_ratio'] = projectInfo['sg_pixel_aspect']
+        except AttributeError:
+            return None
         return info
 
     def find_turntable_task(self):
@@ -1453,3 +1505,9 @@ class LazySiouxsie(QtGui.QWidget):
             self.ground_plane = grounds
         return True
 
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication.instance()
+    window = LazySiouxsie()
+    window.show()
+    app.exec_(sys.argv)
